@@ -5,7 +5,7 @@ Converts long URLs to short URLs, making it convenient for users to share URLs.
 
 - 프론트엔드: EJS, MVP.css
 - 백엔드: Node.js, Express.js
-- 데이터베이스: MySQL
+- 데이터베이스: SQLite
 
 ## **사용 방법**
 
