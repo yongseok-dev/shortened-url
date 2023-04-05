@@ -8,7 +8,7 @@ import ErrorController from "../controller/Error.js";
 const router = express.Router();
 
 // Main
-router.get("/main", MainController.get);
+router.get("/", MainController.get);
 
 // URL
 router.get("/url", URLController.get);
@@ -21,9 +21,9 @@ router.get("/login", UserController.get);
 router.post("/logout", UserController.post);
 
 // Redirect
-router.get("/", RedirectController.get);
+router.get("/:short", RedirectController.get);
 
 // Error
-router.get("/", ErrorController.get);
+router.get("/*", ErrorController.get);
 
 export default router;

@@ -1,7 +1,13 @@
 const RedirectController = {
   get: (req, res, next) => {
-    const data = { url: "https://github.com/yongseok-dev" };
-    res.redirect(301, data.url);
+    if (req.params.short !== "") {
+      const data = {
+        url: "https://github.com/yongseok-dev/" + req.params.short,
+      };
+      res.redirect(301, data.url);
+    } else {
+      next();
+    }
   },
 };
 
