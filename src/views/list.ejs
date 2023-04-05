@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <style>
+      input {
+        margin-bottom: 0;
+      }
+      input[type="button"] {
+        cursor: pointer;
+      }
+      input[type="button"]:hover {
+        background-color: #333;
+        color: #fff;
+      }
+      td[name="url"] {
+        cursor: pointer;
+      }
+    </style>
+    <title><%=title%></title>
+  </head>
+  <body>
+    <header>
+      <h1>단축 URL 생성기@<%=user%></h1>
+    </header>
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>
+              <label for="url">URL</label>
+            </th>
+            <th>
+              <label for="explanation">설명</label>
+            </th>
+            <th>등록</th>
+          </tr>
+        </thead>
+        <tr>
+          <td></td>
+          <td>
+            <input type="url" id="url" />
+          </td>
+          <td>
+            <input type="text" id="explanation" />
+          </td>
+          <td>
+            <input onclick="post()" type="submit" value="등록" />
+          </td>
+        </tr>
+      </table>
+    </section>
+    <section>
+      <div><br /></div>
+      <h2>·</h2>
+    </section>
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>단축</th>
+            <th>URL</th>
+            <th>설명</th>
+            <th>접속자 수</th>
+            <th>생성일</th>
+            <th>접속일</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%list.forEach((element,index)=>{%>
+          <tr>
+            <td><%=(index+1)%></td>
+            <td name="url" onclick="copy('<%=element.url_short%>')">
+              <%=element.url_short%>
+            </td>
+            <td><%=element.url_long%></td>
+            <td><%=element.explanation%></td>
+            <td><%=element.count%></td>
+            <td><%=element.created_at%></td>
+            <td><%=element.updated_at%></td>
+            <td>
+              <input type="button" name="<%=element.id%>" value="삭제" />
+            </td>
+          </tr>
+          <%})%>
+        </tbody>
+      </table>
+    </section>
+    <footer>
+      © <a href="https://github.com/yongseok-dev">github.com/yongseok-dev </a>
+    </footer>
+    <script>
+      function copy(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            console.log("텍스트가 복사되었습니다.");
+          })
+          .catch((err) => {
+            console.error("복사 실패: ", err);
+          });
+      }
+      function post() {
+        const url = document.getElementById("url");
+        const explanation = document.getElementById("explanation");
+        fetch("./url", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            url: url.value,
+            explanation: explanation.value,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            addList(data.list);
+            url.value = "";
+            explanation.value = "";
+            copy(data.list.url_short);
+          })
+          .catch((error) => {
+            console.error(error);
+            // alert("저장 실패");
+          });
+      }
+      function addList(row) {
+        const table = document.querySelector(
+          "body > section:nth-child(4) > table > tbody"
+        );
+        const tableRow = [
+          table.getElementsByTagName("tr").length + 1,
+          row.url_short,
+          row.url_long,
+          row.explanation,
+          row.count,
+          row.created_at,
+          row.updated_at,
+          `<input type="button" name="${row.id}" value="삭제" />`,
+        ];
+        const tr = document.createElement("tr");
+
+        tableRow.forEach((element, index) => {
+          const td = document.createElement("td");
+          td.innerHTML = element;
+          tr.appendChild(td);
+        });
+        table.appendChild(tr);
+      }
+    </script>
+  </body>
+</html>
