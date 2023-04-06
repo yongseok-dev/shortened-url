@@ -21,7 +21,7 @@ router.get("/login", UserController.get);
 router.post("/logout", UserController.post);
 
 // Redirect
-router.get("/:short", RedirectController.get);
+router.get("/:urlShort", RedirectController.get);
 
 // Error
 router.get("/*", ErrorController.get);

@@ -1,11 +1,15 @@
+import URLModel from "../model/Url.model.js";
+
 const RedirectController = {
-  get: (req, res, next) => {
-    if (req.params.short !== "") {
-      const data = {
-        url: "https://github.com/yongseok-dev/" + req.params.short,
-      };
-      res.redirect(301, data.url);
-    } else {
+  get: async (req, res, next) => {
+    const urlShort = req.params.urlShort;
+    if (urlShort.length !== 6) {
+      next();
+    }
+    try {
+      const [{ url_long }] = await URLModel.selectOne(urlShort);
+      res.redirect(301, url_long);
+    } catch (error) {
       next();
     }
   },
