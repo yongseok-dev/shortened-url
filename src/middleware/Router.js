@@ -1,9 +1,9 @@
 import express from "express";
-import MainController from "../controller/Main.js";
-import UserController from "../controller/User.js";
-import URLController from "../controller/Url.js";
-import RedirectController from "../controller/Redirect.js";
-import ErrorController from "../controller/Error.js";
+import MainController from "../controller/Main.controller.js";
+import UserController from "../controller/User.controller.js";
+import URLController from "../controller/Url.controller.js";
+import RedirectController from "../controller/Redirect.controller.js";
+import ErrorController from "../controller/Error.controller.js";
 
 const router = express.Router();
 
