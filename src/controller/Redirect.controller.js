@@ -9,7 +9,7 @@ const RedirectController = {
     try {
       const [{ id, url_long }] = await URLModel.selectOne(urlShort);
       URLModel.visit(id);
-      res.redirect(301, decodeURIComponent(url_long));
+      return res.redirect(301, decodeURIComponent(url_long));
     } catch (error) {
       next();
     }

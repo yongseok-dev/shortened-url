@@ -15,7 +15,7 @@ const URLController = {
       element["url_long"] = decodeURIComponent(element["url_long"]);
       return element;
     });
-    res.render("list", data);
+    return res.render("list", data);
   },
   post: async (req, res) => {
     const userid = undefined;
@@ -24,10 +24,10 @@ const URLController = {
       type: "URL:post",
       message: "SUCCESS",
     };
-    if (!isValidUrl(req.body.url)) {
+    if (!isValidUrl(req.body.url.trim())) {
       data["err"] = "URL_ERROR";
       data["message"] = "";
-      res.json(data);
+      return res.json(data);
     }
     const dto = {
       url_long: encodeURIComponent(req.body.url.trim()),
@@ -36,14 +36,14 @@ const URLController = {
     if ((await URLModel.insert(dto, userid)) === undefined) {
       data["err"] = "SQLITE_ERROR";
       data["message"] = "";
-      res.json(data);
+      return res.json(data);
     }
     const result = await URLModel.selectAll(userid);
     data["list"] = result.map((element) => {
       element["url_long"] = decodeURIComponent(element["url_long"]);
       return element;
     });
-    res.json(data);
+    return res.json(data);
   },
   delete: async (req, res) => {
     const userid = undefined;
@@ -62,7 +62,7 @@ const URLController = {
       element["url_long"] = decodeURIComponent(element["url_long"]);
       return element;
     });
-    res.json(data);
+    return res.json(data);
   },
   put: (req, res) => {
     const data = {
@@ -70,7 +70,7 @@ const URLController = {
       type: "URL:put",
       message: "SUCCESS",
     };
-    res.json(data);
+    return res.json(data);
   },
 };
 

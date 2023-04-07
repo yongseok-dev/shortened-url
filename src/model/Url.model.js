@@ -23,7 +23,6 @@ const url = {
       user='${userid}'
       AND deleted_at is NULL
     ;`;
-    console.log(sql);
     return await query(sql);
   },
   insert: async (data) => {
@@ -40,7 +39,6 @@ const url = {
     VALUES 
     ('${urlShort}', '${url_long}', ${code}, '${explanation}', '${data.userid}')
     ;`;
-    console.log(sql);
     return await query(sql);
   },
   delete: async (id, userid) => {
