@@ -6,7 +6,8 @@ const url = {
   selectOne: async (urlShort) => {
     const sql = `
     SELECT 
-      url_long
+      id
+      , url_long
     FROM ${TABLE_NAME} 
     WHERE 
       url_short='${urlShort}'
@@ -61,8 +62,7 @@ const url = {
       count = count + 1
       , updated_at = datetime('now') 
     WHERE 
-      id=${id} 
-      AND user=${userid}
+      id=${id}
     ;`;
     return await query(sql);
   },
