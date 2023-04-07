@@ -8,6 +8,7 @@ const URLController = {
       title: "단축URL서비스",
       type: "URL:get",
       message: "SUCCESS",
+      user: "Yongseok",
     };
     const result = await URLModel.selectAll(userid);
     data["list"] = result.map((element) => {
@@ -24,14 +25,18 @@ const URLController = {
       message: "SUCCESS",
     };
     if (!isValidUrl(req.body.url)) {
-      data["message"] = "URL_ERROR";
+      data["err"] = "URL_ERROR";
+      data["message"] = "";
+      res.json(data);
     }
     const dto = {
       url_long: encodeURIComponent(req.body.url),
       explanation: escapeHtml(req.body.explanation),
     };
     if ((await URLModel.insert(dto, userid)) === undefined) {
-      data["message"] = "SQLITE_ERROR";
+      data["err"] = "SQLITE_ERROR";
+      data["message"] = "";
+      res.json(data);
     }
     const result = await URLModel.selectAll(userid);
     data["list"] = result.map((element) => {
@@ -40,12 +45,31 @@ const URLController = {
     });
     res.json(data);
   },
-  delete: (req, res) => {
-    const data = { title: "단축URL서비스", message: "단축URL 서비스입니다." };
+  delete: async (req, res) => {
+    const userid = undefined;
+    const urlid = Number(req.body.id);
+    const data = {
+      title: "단축URL서비스",
+      type: "URL:delete",
+      message: "SUCCESS",
+    };
+    if ((await URLModel.delete(urlid, userid)) === undefined) {
+      data["err"] = "SQLITE_ERROR";
+      data["message"] = "";
+    }
+    const result = await URLModel.selectAll(userid);
+    data["list"] = result.map((element) => {
+      element["url_long"] = decodeURIComponent(element["url_long"]);
+      return element;
+    });
     res.json(data);
   },
   put: (req, res) => {
-    const data = { title: "단축URL서비스", message: "단축URL 서비스입니다." };
+    const data = {
+      title: "단축URL서비스",
+      type: "URL:put",
+      message: "SUCCESS",
+    };
     res.json(data);
   },
 };

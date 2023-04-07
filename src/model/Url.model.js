@@ -50,8 +50,8 @@ const url = {
       updated_at = datetime('now') 
       , deleted_at = datetime('now') 
     WHERE 
-      id=${id} 
-      AND user=${userid}
+      id='${id}' 
+      AND user='${userid}'
     ;`;
     return await query(sql);
   },

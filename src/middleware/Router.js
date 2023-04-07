@@ -9,8 +9,8 @@ const router = express.Router();
 // URL
 router.get("/", URLController.get);
 router.post("/url", URLController.post);
-router.put("/url", URLController.put);
 router.delete("/url", URLController.delete);
+// router.put("/url", URLController.put);
 
 // USER
 router.get("/login", UserController.get);
