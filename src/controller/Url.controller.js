@@ -30,8 +30,8 @@ const URLController = {
       res.json(data);
     }
     const dto = {
-      url_long: encodeURIComponent(req.body.url),
-      explanation: escapeHtml(req.body.explanation),
+      url_long: encodeURIComponent(req.body.url.trim()),
+      explanation: escapeHtml(req.body.explanation.trim()),
     };
     if ((await URLModel.insert(dto, userid)) === undefined) {
       data["err"] = "SQLITE_ERROR";
