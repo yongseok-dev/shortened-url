@@ -1,32 +1,43 @@
 import URLModel from "../model/Url.model.js";
+import { isValidUrl, escapeHtml } from "../util/inputValidation.js";
+
 const URLController = {
   get: async (req, res) => {
+    const userid = undefined;
     const data = {
       title: "단축URL서비스",
-      user: "yongseok",
+      type: "URL:get",
+      message: "SUCCESS",
     };
-    data["list"] = await URLModel.selectAll(undefined);
+    const result = await URLModel.selectAll(userid);
+    data["list"] = result.map((element) => {
+      element["url_long"] = decodeURIComponent(element["url_long"]);
+      return element;
+    });
     res.render("list", data);
   },
-  post: (req, res) => {
-    console.log(req.body);
-    const userid = 1;
+  post: async (req, res) => {
+    const userid = undefined;
     const data = {
-      url_long: req.body.url,
-      explanation: req.body.explanation,
       title: "단축URL서비스",
-      list: {
-        id: "id",
-        url_short: "url_short",
-        url_long: "url_long",
-        count: "count",
-        code: "code",
-        explanation: "explanation",
-        created_at: "created_at",
-        updated_at: "updated_at",
-      },
+      type: "URL:post",
+      message: "SUCCESS",
     };
-    URLModel.insert(data, userid);
+    if (!isValidUrl(req.body.url)) {
+      data["message"] = "URL_ERROR";
+    }
+    const dto = {
+      url_long: encodeURIComponent(req.body.url),
+      explanation: escapeHtml(req.body.explanation),
+    };
+    if ((await URLModel.insert(dto, userid)) === undefined) {
+      data["message"] = "SQLITE_ERROR";
+    }
+    const result = await URLModel.selectAll(userid);
+    data["list"] = result.map((element) => {
+      element["url_long"] = decodeURIComponent(element["url_long"]);
+      return element;
+    });
     res.json(data);
   },
   delete: (req, res) => {

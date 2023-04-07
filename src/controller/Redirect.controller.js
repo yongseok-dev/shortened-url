@@ -8,7 +8,7 @@ const RedirectController = {
     }
     try {
       const [{ url_long }] = await URLModel.selectOne(urlShort);
-      res.redirect(301, url_long);
+      res.redirect(301, decodeURIComponent(url_long));
     } catch (error) {
       next();
     }
