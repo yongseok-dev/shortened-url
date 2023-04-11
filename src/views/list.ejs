@@ -24,6 +24,11 @@
   </head>
   <body>
     <header>
+      <div style="display: flex; justify-content: flex-end">
+        <span>
+          <input type="button" value="로그아웃" id="logout" />
+        </span>
+      </div>
       <h1>단축 URL 생성기@<%=user%></h1>
     </header>
     <section>
@@ -107,19 +112,19 @@
           header.forEach((key) => {
             const td = document.createElement("td");
             td.innerHTML = key === "idx" ? idx + 1 : row[key];
-            if (key==="url_short") {
-              td.style.cursor = "pointer"
-              td.addEventListener("click",(e)=>{
-                copy(row[key])
-              })
-            }else if (key==="id") {
-              const bt = document.createElement("input")
-              bt.type = "button"
-              bt.value = "삭제"
-              td.addEventListener("click",(e)=>{
-                remove(row[key])
-              })
-              td.innerHTML="";
+            if (key === "url_short") {
+              td.style.cursor = "pointer";
+              td.addEventListener("click", (e) => {
+                copy(row[key]);
+              });
+            } else if (key === "id") {
+              const bt = document.createElement("input");
+              bt.type = "button";
+              bt.value = "삭제";
+              td.addEventListener("click", (e) => {
+                remove(row[key]);
+              });
+              td.innerHTML = "";
               td.appendChild(bt);
             }
             tr.appendChild(td);
@@ -192,6 +197,19 @@
             console.error("복사 실패: ", err);
           });
       }
+
+      const logout = document.getElementById("logout");
+      logout.addEventListener("click", (e) => {
+        fetch("./logout", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {if(data){location.reload()}})
+          .catch((error) => console.error(error));
+      });
     </script>
   </body>
 </html>

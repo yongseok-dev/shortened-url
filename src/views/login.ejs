@@ -4,10 +4,82 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    <!-- <link rel="stylesheet" href="https://unpkg.com/mvp.css" /> -->
     <title><%= title %></title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f6f8fa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #ffffff;
+        padding: 50px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: #1c1e21;
+      }
+      .subtitle {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #586069;
+      }
+      .button {
+        padding: 10px 20px;
+        background-color: #000000;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 30px;
+      }
+    </style>
   </head>
   <body>
-    <%= message %>
+    <div class="container">
+      <div class="title">단축 URL 서비스 Login</div>
+      <div class="subtitle">깃허브 계정으로 로그인해주세요.</div>
+      <button id="loginBtn" class="button">Login with GitHub</button>
+    </div>
+
+    <script>
+      const loginBtn = document.querySelector("#loginBtn");
+      loginBtn.addEventListener("click", () => {
+        // 새 창을 엽니다.
+        const loginWindow = window.open(
+          "./login",
+          "Login",
+          "width=500,height=720"
+        );
+
+        // 새 창에서 쿠키가 설정되었는지 확인합니다.
+        setInterval(() => {
+          fetch("./hasUser")
+            .then((response) => response.json())
+            .then((data) => {
+              if (data) {
+                location.reload();
+              }
+            })
+            .catch((error) => console.error(error));
+        }, 1000);
+      });
+    </script>
   </body>
 </html>
