@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import router from "./src/middleware/Router.js";
-import { verifyToken } from "./src/middleware/Auth.js";
+import verifyToken from "./src/middleware/Auth.js";
 
 dotenv.config();
 const port = process.env.PORT || "3000";

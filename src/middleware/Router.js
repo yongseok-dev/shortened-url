@@ -13,8 +13,10 @@ router.delete("/url", URLController.delete);
 // router.put("/url", URLController.put);
 
 // USER
-router.get("/login", UserController.get);
-router.post("/logout", UserController.post);
+router.get("/hasUser", UserController.info);
+router.get("/login", UserController.login);
+router.get("/callback", UserController.callback);
+router.delete("/logout", UserController.logout);
 
 // Redirect
 router.get("/:urlShort", RedirectController.get);
