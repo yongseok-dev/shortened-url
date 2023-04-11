@@ -25,7 +25,7 @@ const url = {
     ;`;
     return await query(sql);
   },
-  insert: async (data) => {
+  insert: async (data, userid) => {
     let urlShort = generateRandomString(6);
     while (url.selectOne(urlShort).length == 0) {
       urlShort = generateRandomString(6);
@@ -37,7 +37,7 @@ const url = {
     INSERT INTO ${TABLE_NAME}
     (url_short, url_long, code, explanation, user)
     VALUES 
-    ('${urlShort}', '${url_long}', ${code}, '${explanation}', '${data.userid}')
+    ('${urlShort}', '${url_long}', ${code}, '${explanation}', '${userid}')
     ;`;
     return await query(sql);
   },

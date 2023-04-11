@@ -3,12 +3,21 @@ import { isValidUrl, escapeHtml } from "../util/inputValidation.js";
 
 const URLController = {
   get: async (req, res) => {
-    const userid = undefined;
+    const user = req.user;
+    if (!user) {
+      const data = {
+        title: "단축URL서비스",
+        type: "URL:get",
+        message: "SUCCESS 로그인이 필요합니다.",
+      };
+      return res.render("login", data);
+    }
+    const userid = user.userId;
     const data = {
       title: "단축URL서비스",
       type: "URL:get",
       message: "SUCCESS",
-      user: req.user.userName,
+      user: user.userName,
     };
     const result = await URLModel.selectAll(userid);
     data["list"] = result.map((element) => {
@@ -18,7 +27,8 @@ const URLController = {
     return res.render("list", data);
   },
   post: async (req, res) => {
-    const userid = undefined;
+    const user = req.user;
+    const userid = user.userId;
     const data = {
       title: "단축URL서비스",
       type: "URL:post",
@@ -46,7 +56,8 @@ const URLController = {
     return res.json(data);
   },
   delete: async (req, res) => {
-    const userid = undefined;
+    const user = req.user;
+    const userid = user.userId;
     const urlid = Number(req.body.id);
     const data = {
       title: "단축URL서비스",
