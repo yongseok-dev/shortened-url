@@ -8,7 +8,7 @@ const URLController = {
       title: "단축URL서비스",
       type: "URL:get",
       message: "SUCCESS",
-      user: "Yongseok",
+      user: req.user.userName,
     };
     const result = await URLModel.selectAll(userid);
     data["list"] = result.map((element) => {
