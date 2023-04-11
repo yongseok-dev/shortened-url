@@ -1,6 +1,6 @@
 function isValidUrl(url) {
   const pattern =
-    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-@#_]*)*\/?$/;
+    /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-@#_=&]*)*\/?$/;
   return pattern.test(url);
 }
 function escapeHtml(unsafe) {
