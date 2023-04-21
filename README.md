@@ -1,6 +1,10 @@
 # shortened-url
 Converts long URLs to short URLs, making it convenient for users to share URLs.
 
+## **서비스 안내**
+- https://url.seok.app/
+- https://url.seok.app/KRONGM
+
 ## **기술 스택**
 
 - 프론트엔드: EJS, MVP.css
