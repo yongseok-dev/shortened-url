@@ -2,8 +2,7 @@ import sqlite3 from "sqlite3";
 import dotenv from "dotenv";
 dotenv.config();
 
-const file =
-  process.env.NODE_ENV === "DEV" ? `./data/SQLiteDEV.db` : `./data/SQLite.db`;
+const file = `./data/SQLite${process.env.NODE_ENV}.db`;
 const db = new sqlite3.Database(file, (err) => {
   if (err) {
     console.error(err.message);
