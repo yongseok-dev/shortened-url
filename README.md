@@ -5,7 +5,7 @@ Converts long URLs to short URLs, making it convenient for users to share URLs.
 ## **서비스 안내**
 
 - https://url.seok.app/
-- https://url.seok.app/KRONGM
+- https://url.seok.app/CRAVMJ
 
 ## **기술 스택**
 
